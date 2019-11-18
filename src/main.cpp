@@ -124,8 +124,5 @@ int main() {
         
     punt_cardinal_led_on(x, y);
 
-    
-
-    
   }
 }
