@@ -1,8 +1,8 @@
 #include <mbed.h>
 
 //Centre
-#define CENTERMIN 0.70
-#define CENTERMAX 0.80
+#define CENTERMIN 0.60
+#define CENTERMAX 0.85
 /*
 //NORD
 #define NORTHX 0.731624
@@ -43,10 +43,11 @@ void ini_leds(){
 
 char calibration(double x, double y){
   char value = 0;
-  if(x>CENTERMAX) value = value | (1 << 2); //Max x
-  else value = value | (1 << 0); //Min x
-  if(y>CENTERMAX) value = value | (1 << 3); //Max y
-  else value = value | (1 << 1); //Min y
+  if(x>CENTERMAX) value = value | (1 << 2); //est
+  if(x<CENTERMIN) value = value | (1 << 0); //oest
+  
+  if(y>CENTERMAX) value = value | (1 << 3); //nord
+  if(y<CENTERMIN) value = value | (1 << 1); //sud
   
   return value;
 }
@@ -63,13 +64,16 @@ void punt_cardinal_led_on(char value){
 }
 
 
-int main() {
+int main(){
 
   // put your setup code here, to run once:
   char posX[10];
   char posY[10];
-  char sortida[10];
-  
+  char sortidaN[10];
+  char sortidaS[10];
+  char sortidaE[10];
+  char sortidaO[10];
+ 
 
   while(1) {
     // put your main code here, to run repeatedly:
@@ -80,13 +84,32 @@ int main() {
     double y = posY_joystick.read();
     sprintf(posY, "y: %lf\n", y);
     serial1.printf(posY);
+    int nord;
+    nord = 0;
+    int sud=0;
+    int est=0;
+    int oest=0;
+    
 
     ini_leds();
-    char val =calibration(x, y);
-    sprintf(sortida, "res: %c\n", val);
-    serial1.printf(sortida);
-      
-      punt_cardinal_led_on(val);
+    char value = calibration(x, y);
+    if (value & (1 << 3)) nord=1;
+    if(value & (1 << 1)) sud=1;
+    if(value & (1 << 2)) est=1;
+    if(value & (1 << 0)) oest=1;
+    
+
+
+    sprintf(sortidaN, "Nord: %d", nord);
+    serial1.printf(sortidaN);
+    sprintf(sortidaS, "Sud: %d", sud);
+    serial1.printf(sortidaS);
+    sprintf(sortidaE, "Est: %d", est);
+    serial1.printf(sortidaE);
+    sprintf(sortidaO, "Oest: %d", oest);
+    serial1.printf(sortidaO);
+    
+    punt_cardinal_led_on(value);
     //punt_cardinal_led_on(calibration(x, y));
     /*
     double num = position(x);
