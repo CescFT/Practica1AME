@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1574804749 source:d:\merdac\string\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
