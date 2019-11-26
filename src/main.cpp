@@ -3,34 +3,51 @@
 //Centre
 #define CENTERMIN 0.60
 #define CENTERMAX 0.85
-/*
-//NORD
-#define NORTHX 0.731624
-#define NORTHY 0.863492
 
-//SOUTH
-#define SOUTHX 0.8424
-#define SOUTHY 0.0166
-
-//EAST
-#define EASTX 0.807545
-#define EASTY 0.79758
-
-
-//WEST
-#define WESTX 0.81319
-#define WESTY 0.01782
-*/
 
 AnalogIn posX_joystick (A1); //IO
 AnalogIn posY_joystick (A0); //I1
 
-DigitalOut led_nord(D9); //O3
-DigitalOut led_sud(D5); //O4
-DigitalOut led_est(D10); //O1
-DigitalOut led_oest(D6); //O2
+DigitalOut led_nord(D11); //O0
+DigitalOut led_sud(D10); //O1
+DigitalOut led_est(D9); //O2
+DigitalOut led_oest(D6); //O3
+DigitalOut led_boto(D5); //O4
+DigitalIn button(A2); //boto
 
 Serial serial1(USBTX, USBRX);
+
+
+void calculValor(double x, double y, char value){
+    int equivY = 0;
+    int equivX = 0;
+    char xequiv[100];
+    char yequiv[100];
+    if((value & (1 << 3))){
+      equivY=(y - CENTERMAX)*127/(1 - CENTERMAX);
+    }
+    if((value & (1 << 1))){
+      equivY=y*127/(1-CENTERMIN);
+      equivY=-(127 - equivY);
+    }
+    if((value & (1 << 2))){
+      equivX=(x - CENTERMAX)*127/(1 - CENTERMAX);
+    }
+    if((value & (1 << 0))){
+      equivX=x*127/(1-CENTERMIN);
+      equivX=-(127 - equivX);
+    }
+
+    sprintf(xequiv, "\nx bona: %d", equivX);
+    sprintf(yequiv, "\ny bona: %d\n", equivY);
+    serial1.printf(xequiv);
+    serial1.printf(yequiv);
+
+
+}
+
+
+
 
 
 void ini_leds(){
@@ -73,6 +90,8 @@ int main(){
   char sortidaS[10];
   char sortidaE[10];
   char sortidaO[10];
+  char equivY[10];
+  char equivX[10];
  
 
   while(1) {
@@ -90,32 +109,35 @@ int main(){
     int est=0;
     int oest=0;
     
-
+    
     ini_leds();
-    char value = calibration(x, y);
-    if (value & (1 << 3)) nord=1;
-    if(value & (1 << 1)) sud=1;
-    if(value & (1 << 2)) est=1;
-    if(value & (1 << 0)) oest=1;
-    
+    if(button.read()==0){
+      char value = calibration(x, y);
+      if (value & (1 << 3)) nord=1;
+      if(value & (1 << 1)) sud=1;
+      if(value & (1 << 2)) est=1;
+      if(value & (1 << 0)) oest=1;
+      
 
 
-    sprintf(sortidaN, "Nord: %d", nord);
-    serial1.printf(sortidaN);
-    sprintf(sortidaS, "Sud: %d", sud);
-    serial1.printf(sortidaS);
-    sprintf(sortidaE, "Est: %d", est);
-    serial1.printf(sortidaE);
-    sprintf(sortidaO, "Oest: %d", oest);
-    serial1.printf(sortidaO);
-    
-    punt_cardinal_led_on(value);
-    //punt_cardinal_led_on(calibration(x, y));
-    /*
-    double num = position(x);
-    sprintf(sortida, "res: %lf\n", num);
-    serial1.printf(sortida);
-    */
+      sprintf(sortidaN, "Nord: %d ", nord);
+      serial1.printf(sortidaN);
+      sprintf(sortidaS, "Sud: %d ", sud);
+      serial1.printf(sortidaS);
+      sprintf(sortidaE, "Est: %d ", est);
+      serial1.printf(sortidaE);
+      sprintf(sortidaO, "Oest: %d ", oest);
+      serial1.printf(sortidaO);
+      
+      punt_cardinal_led_on(value);
+      
+
+
+      calculValor(x, y, value);
+
+
+    }
+      led_boto.write(button.read());
 
   }
 }
