@@ -23,6 +23,10 @@ void calculValor(double x, double y, char value){
     int equivX = 0;
     char xequiv[100];
     char yequiv[100];
+    for(int i = 0; i<100; i++)
+        xequiv[i]='b';
+    for(int i=0; i<100; i++)
+        yequiv[i]='b';
     if((value & (1 << 3))){
       equivY=(y - CENTERMAX)*127/(1 - CENTERMAX);
     }

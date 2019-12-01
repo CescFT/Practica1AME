@@ -1,41 +1,41 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
-int main()
-{
+#include "str2send.h"
 
-    char resultat[100];
-    char x[10];
-    char y[10];
-    char xReal[10];
-    char yReal[10];
-    strcpy(resultat, "DATA,");
-    int i=0;
-    for(i=0; i<10;i++){
-        x[i]='b';
-        y[i]='b';
+StringToSend::StringToSend(int _xI, int _yI,char _x[], char _y[], bool _buttonPressed){
+    for(int i = 0; i<10; i++){
+        x[i]=_x[i];
     }
 
-    int valX = -57;
-    int valY = 85;
-    if(valX > 0){
-        sprintf(x, "%d", valX);
+    for(int i=0; i<10; i++){
+        y[i]=_y[i];
+    }
+
+    xI=_xI;
+    yI=_yI;
+    bButtonPressed = _buttonPressed;
+}
+
+
+void StringToSend::iniResultatToSend(){
+   strcpy(resultat, "DATA,");
+}
+
+void StringToSend::determinarSigneNombreX(){
+    if(xI > 0)
         xReal[0]='+';
-    }else{
-        sprintf(x, "%d",valX);
+    else 
         xReal[0]='-';
-    }
+}
 
-    if(valY>0){
-        sprintf(y, "%d", valY);
+void StringToSend::determinarSigneNombreY(){
+    if(yI > 0)
         yReal[0]='+';
-    }else{
-        sprintf(y,"%d", valY);
+    else 
         yReal[0]='-';
-    }
+}
 
-    i=0;
+void StringToSend::processarXReal(){
+    int i= 0;
     int numReal=0;
     bool teSigneNegatiu = false;
     for(i=0;i<10;i++){
@@ -73,11 +73,12 @@ int main()
     }
     xReal[4]=',';
     xReal[5]='\0';
+}
 
-
-    i=0;
-    numReal=0;
-    teSigneNegatiu = false;
+void StringToSend::processarYReal(){
+    int i = 0;
+    int numReal = 0;
+    bool teSigneNegatiu = false;
     for(i=0;i<10;i++){
         if(y[i]!='b' && y[i]!='\0')
            numReal++;
@@ -103,31 +104,28 @@ int main()
         yReal[3]=y[2];
     }else if(numReal == 3 && teSigneNegatiu){
         yReal[1] ='0';
-        yReal[2]= x[1];
-        yReal[3]=x[2];
+        yReal[2]= y[1];
+        yReal[3]=y[2];
     }else if(numReal == 4){
-        yReal[1] =x[1];
-        yReal[2]= x[2];
-        yReal[3]=x[3];
-    }
-    xReal[4]=',';
-    xReal[5]='\0';
-
-
-    strcat(resultat,xReal);
-    strcat(resultat, yReal);
-
-
-    char boto =0;
-
-    if(boto == 0){
-        strcat(resultat,",0");
-    }else if(boto==1){
-        strcat(resultat, ",1");
+        yReal[1] =y[1];
+        yReal[2]= y[2];
+        yReal[3]=y[3];
     }
 
-    printf("\nEl string resultat: %s\n", resultat);
+    yReal[4] = ',';
+    yReal[5] = '\0';
 
-
-    return 0;
 }
+
+
+void StringToSend::generateString(){
+    strcat(resultat, xReal);
+    strcat(resultat,yReal);
+    if(bButtonPressed) //boto apretat
+        strcat(resultat, ",1");
+    else
+        strcat(resultat, ",0");
+
+    //enviarho al earth!
+}
+
