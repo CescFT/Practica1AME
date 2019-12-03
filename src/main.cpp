@@ -1,4 +1,5 @@
 #include <mbed.h>
+#include "str2send.h"
 
 //Centre
 #define CENTERMIN 0.60
@@ -23,10 +24,8 @@ void calculValor(double x, double y, char value){
     int equivX = 0;
     char xequiv[100];
     char yequiv[100];
-    for(int i = 0; i<100; i++)
-        xequiv[i]='b';
-    for(int i=0; i<100; i++)
-        yequiv[i]='b';
+
+  
     if((value & (1 << 3))){
       equivY=(y - CENTERMAX)*127/(1 - CENTERMAX);
     }
@@ -46,8 +45,10 @@ void calculValor(double x, double y, char value){
     sprintf(yequiv, "\ny bona: %d\n", equivY);
     serial1.printf(xequiv);
     serial1.printf(yequiv);
-
-
+    
+    StringToSend str(equivX, equivY, xequiv,yequiv, false);
+    str.iniResultatToSend();
+    str.generateString();
 }
 
 
@@ -115,6 +116,7 @@ int main(){
     
     
     ini_leds();
+
     if(button.read()==0){
       char value = calibration(x, y);
       if (value & (1 << 3)) nord=1;
