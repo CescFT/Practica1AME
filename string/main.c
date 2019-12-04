@@ -14,14 +14,14 @@ void processarReal(char val[], bool esX)
 
 int main()
 {
-    int xLlegida=100;
+    int xLlegida=127;
     int yLlegida=-1;
     char xReal[10];
     char yReal[10];
     char x[10];
     char y[10];
     char resultat[100];
-    char signe='a';
+    char signe='-';
 
     if(!determinarSigneNombre(xLlegida))
         signe='+';
@@ -35,7 +35,7 @@ int main()
         sprintf(x, "%d\0", xLlegida);
     }
 
-    signe='a';
+    signe='-';
     if(!determinarSigneNombre(yLlegida))
         signe='+';
 
