@@ -8,7 +8,7 @@ class StringToSend{
         void generateString(); //enviarho directament al earth
         void iniResultatToSend();
         bool determinarSigneNombre(int n);
-        void processarReal(char val[]);
+        void processarReal(char val[], bool esX);
         void processarYReal();
         
     private:
