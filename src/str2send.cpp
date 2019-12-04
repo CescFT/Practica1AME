@@ -6,14 +6,25 @@ Serial s(USBTX, USBRX);
 
 StringToSend::StringToSend(int _xI, int _yI,char _x[], char _y[], bool _buttonPressed){
     
-    char f[10];
+    char signe='a';
     
     if(!determinarSigneNombre(_xI)) 
-        f[0]='+';
-    sprintf(x, "%s%d\0",f, _x);
+        signe='+';
+    
+    if(signe=='+')
+        sprintf(x, "%c%d\0",signe, _x);
+    else
+        sprintf(x, "%d\0", _x);
+    
+    signe='a';
+
     if(!determinarSigneNombre(_yI))   
-        f[0]='+';
-    sprintf(y, "%s%d\0",f, _y);
+        signe='+';
+    
+    if(signe=='+')
+        sprintf(y, "%c%d\0",signe, _y);
+    else 
+        sprintf(y, "%d\0", _y);
 
     
     xI=_xI;
