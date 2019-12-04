@@ -14,8 +14,8 @@ void processarReal(char val[], bool esX)
 
 int main()
 {
-    int xLlegida=-20;
-    int yLlegida=1;
+    int xLlegida=120;
+    int yLlegida=-1;
     char xReal[10];
     char yReal[10];
     char x[10];
@@ -27,48 +27,59 @@ int main()
         signe='+';
 
 
-    if(signe == '+')
+    if(signe == '+'){
+        xReal[0]='+';
         sprintf(x, "%c%d\0", signe,xLlegida);
-    else
+    }else{
+        xReal[0]='-';
         sprintf(x, "%d\0", xLlegida);
-
+    }
 
     signe='a';
     if(!determinarSigneNombre(yLlegida))
         signe='+';
 
 
-    if(signe=='+')
+    if(signe=='+'){
         sprintf(y, "%c%d\0", signe, yLlegida);
-    else
+        yReal[0]='+';
+    }else{
+        yReal[0]='-';
         sprintf(y, "%d\0", yLlegida);
+    }
 
-    printf("%s\n", x);
-    printf("%s\n", y);
 
     strcpy(resultat, "DATA,");
 
     int numReal=0;
-    char *val= &x;
-    char elem=*val;
-    while(elem!='\0')
+
+    if(xLlegida>0)
     {
-        if(elem!='-' || elem!='+'){ /*fet aixi no agafa els signes pero bueno ho podem mirar*/
-            numReal++;
-        }
-        val+=1;
-        elem=*(val);
+        if(xLlegida<=9)
+            numReal=1;
+        else if(xLlegida > 9 && xLlegida<=99)
+            numReal=2;
+        else if(xLlegida>100)
+            numReal=3;
+    }else{
+        if(xLlegida>=-9)
+            numReal=1;
+        else if(xLlegida>=-99 && xLlegida<-9)
+            numReal=2;
+        else if(xLlegida<-99)
+            numReal=3;
     }
 
 
+    char *val= &x;
+    char elem=*val;
 
-    printf("Elements dins de la x: %d", numReal);
+
 
     if(numReal == 1){
         xReal[1]='0';
         xReal[2]='0';
 
-        *val=&x;
         val=val+1;
         elem=*val;
 
@@ -76,33 +87,33 @@ int main()
     }else if (numReal == 2){
         xReal[1] ='0';
 
-        *val=&x;
+
         val=val+1;
         elem=*val;
 
         xReal[2]= elem;
 
-        *val=&x;
-        val=val+2;
+
+        val=val+1;
         elem=*val;
 
         xReal[3]=elem;
     }else if (numReal == 3){
 
-        *val=&x;
+
         val=val+1;
         elem=*val;
 
         xReal[1]=elem;
 
-        *val=&x;
-        val=val+2;
+
+        val=val+1;
         elem=*val;
 
-        xReal[2]=val;
+        xReal[2]=elem;
 
-        *val=&x;
-        val=val+3;
+
+        val=val+1;
         elem=*val;
 
         xReal[3]=elem;
@@ -110,84 +121,87 @@ int main()
     xReal[4]=',';
     xReal[5]='\0';
 
-    printf("%s", xReal);
+    printf("%s\n", xReal);
 
     numReal=0;
-    *val= &y;
-    elem=*val;
-    while(elem!='\0')
+
+    if(yLlegida>0)
     {
-        if(elem!='-' || elem!='+'){ /*fet aixi no agafa els signes pero bueno ho podem mirar*/
-            numReal++;
-        }
-        val+=1;
-        elem=*(val);
+        if(yLlegida<=9)
+            numReal=1;
+        else if(yLlegida > 9 && yLlegida<=99)
+            numReal=2;
+        else if(yLlegida>100)
+            numReal=3;
+    }else{
+        if(yLlegida>=-9)
+            numReal=1;
+        else if(yLlegida>=-99 && yLlegida<-9)
+            numReal=2;
+        else if(yLlegida<-99)
+            numReal=3;
     }
 
 
+    char *p = &y;
+    char elem1= *p;
 
-    printf("Elements dins de la y: %d", numReal);
 
     if(numReal == 1){
         yReal[1]='0';
         yReal[2]='0';
 
-        *val=&y;
-        val = val +1;
-        elem = *val;
 
-        yReal[3]=elem;
+        p = p +1;
+        elem1 = *p;
+
+        yReal[3]=elem1;
     }else if (numReal == 2){
         yReal[1] ='0';
 
-        *val=&y;
-        val = val +1;
-        elem = *val;
+        p = p +1;
+        elem1 = *p;
 
-        yReal[2]= elem;
+        yReal[2]= elem1;
 
-        *val=&y;
-        val = val +2;
-        elem = *val;
+        p=p+1;
+        elem1 = *p;
 
-
-        yReal[3]=elem;
+        yReal[3]=elem1;
     }else if (numReal == 3){
 
-        *val=&y;
-        val = val +1;
-        elem = *val;
+        p=p+1;
+        elem1 = *p;
 
-        yReal[1]=elem;
+        yReal[1]=elem1;
 
-        *val=&y;
-        val = val +2;
-        elem = *val;
+        p=p+1;
+        elem1 = *p;
 
-        yReal[2]=elem;
+        yReal[2]=elem1;
 
-        *val=&y;
-        val = val +3;
-        elem = *val;
+        p=p+1;
+        elem1 = *p;
 
-        yReal[3]=elem;
+        yReal[3]=elem1;
     }
     yReal[4]=',';
     yReal[5]='\0';
 
+    printf("%s", yReal);
 
-    strcpy(resultat, xReal);
-    strcpy(resultat, yReal);
+    strcat(resultat, xReal);
+    strcat(resultat, yReal);
 
     int boto = 0;
 
     if(boto==0){
-        strcpy(resultat, ",0");
+        strcat(resultat, "0");
     }else{
-        strcpy(resultat, ",1");
+        strcat(resultat, "1");
     }
 
-    /*printf("%s, %s", xReal, yReal);*/
+    printf("\n\nString a enviar: %s", resultat);
 
     return 0;
 }
