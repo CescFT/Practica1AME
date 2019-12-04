@@ -14,7 +14,7 @@ void processarReal(char val[], bool esX)
 
 int main()
 {
-    int xLlegida=120;
+    int xLlegida=100;
     int yLlegida=-1;
     char xReal[10];
     char yReal[10];
@@ -59,7 +59,7 @@ int main()
             numReal=1;
         else if(xLlegida > 9 && xLlegida<=99)
             numReal=2;
-        else if(xLlegida>100)
+        else if(xLlegida>99)
             numReal=3;
     }else{
         if(xLlegida>=-9)
