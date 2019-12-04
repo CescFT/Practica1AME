@@ -131,19 +131,61 @@ int main()
     if(numReal == 1){
         yReal[1]='0';
         yReal[2]='0';
-        yReal[3]=y[1];
+
+        *val=&y;
+        val = val +1;
+        elem = *val;
+
+        yReal[3]=elem;
     }else if (numReal == 2){
         yReal[1] ='0';
-        yReal[2]= y[1];
-        yReal[3]=y[2];
+
+        *val=&y;
+        val = val +1;
+        elem = *val;
+
+        yReal[2]= elem;
+
+        *val=&y;
+        val = val +2;
+        elem = *val;
+
+
+        yReal[3]=elem;
     }else if (numReal == 3){
-        yReal[1]=y[1];
-        yReal[2]=y[2];
-        yReal[3]=y[3];
+
+        *val=&y;
+        val = val +1;
+        elem = *val;
+
+        yReal[1]=elem;
+
+        *val=&y;
+        val = val +2;
+        elem = *val;
+
+        yReal[2]=elem;
+
+        *val=&y;
+        val = val +3;
+        elem = *val;
+
+        yReal[3]=elem;
     }
     yReal[4]=',';
     yReal[5]='\0';
 
+
+    strcpy(resultat, xReal);
+    strcpy(resultat, yReal);
+
+    int boto = 0;
+
+    if(boto==0){
+        strcpy(resultat, ",0");
+    }else{
+        strcpy(resultat, ",1");
+    }
 
     /*printf("%s, %s", xReal, yReal);*/
 
