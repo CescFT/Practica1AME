@@ -10,7 +10,7 @@ class StringToSend{
         bool determinarSigneNombre(int n);
         void processarReal(char val[], bool esX);
         void processarYReal();
-        fillZerosCounter(int val);
+        int fillZerosCounter(int val);
         
     private:
         char resultat[100];
