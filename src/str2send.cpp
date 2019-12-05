@@ -35,6 +35,9 @@ StringToSend::StringToSend(int _xI, int _yI,char _x[], char _y[], bool _buttonPr
     }
     sprintf(y, "%d,%d", _yI, _buttonPressed);
     strcat(resultat, y);
+
+    //enviarho al earth!
+    s.printf(resultat);
     
     /*xI=_xI;
     yI=_yI;
@@ -117,8 +120,8 @@ void StringToSend::generateString(){
         strcat(resultat, ",1");
     else
         strcat(resultat, ",0");
-
     //enviarho al earth!
     s.printf(resultat);
+
 }
 
