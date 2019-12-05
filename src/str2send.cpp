@@ -36,10 +36,10 @@ StringToSend::StringToSend(int _xI, int _yI,char _x[], char _y[], bool _buttonPr
     sprintf(y, "%d,%d", _yI, _buttonPressed);
     strcat(resultat, y);
     
-    xI=_xI;
+    /*xI=_xI;
     yI=_yI;
     
-    /*processarReal(x, true);
+    processarReal(x, true);
     processarReal(y, false);
     bButtonPressed = _buttonPressed;*/
     
