@@ -47,7 +47,7 @@ void calculValor(double x, double y, char value){
     serial1.printf(yequiv);
     
     StringToSend str(equivX, equivY, xequiv,yequiv, false);
-    str.iniResultatToSend();
+    
     str.generateString();
 }
 
