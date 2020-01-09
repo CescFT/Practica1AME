@@ -7,7 +7,8 @@ Serial s(USBTX, USBRX);
 StringToSend::StringToSend(int _xI, int _yI,char _x[], char _y[], bool _buttonPressed){
     
     int aux;
-    char signe='a';
+    int aux1;
+    
     
     strcpy(resultat, "DATA,");
     if (!determinarSigneNombre(_xI)){
@@ -30,18 +31,21 @@ StringToSend::StringToSend(int _xI, int _yI,char _x[], char _y[], bool _buttonPr
         strcat(resultat, "-");
         _yI = _yI * (-1);
     }
-    aux = fillZerosCounter(_yI);
-    for (int i = 0; i < aux; i = i + 1){
+    aux1 = fillZerosCounter(_yI);
+    for (int i = 0; i < aux1; i = i + 1){
         strcat(resultat, "0");
     }
     sprintf(y, "%d,%d", _yI, _buttonPressed);
     strcat(resultat, y);
 
-    //enviarho al earth!
-    s.printf(resultat);
+    
     
 }
 
+
+void StringToSend::generateString(){
+    s.printf(resultat);
+}
 
 void StringToSend::iniResultatToSend(){
    strcpy(resultat, "DATA,");
@@ -53,7 +57,7 @@ bool StringToSend::determinarSigneNombre(int n){//esNegatiu
 
 int StringToSend::fillZerosCounter(int val){
     int cont = 2;
-    while (val > 10){
+    while (val >= 10){
         cont = cont - 1;
         val = val / 10;
     }

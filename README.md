@@ -16,10 +16,10 @@ For more information please, feel free to check the following files, containing 
 
 ## Authors
 
-* **Esteve Codina Moreno** - (esteve.codina@estudiants.urv.cat)
-* **Guillem Frisach Pedrola** - (guillem.frisach@estudiants.urv.cat)
 * **Francesc Ferré Tarrés** - (francesc.ferre@estudiants.urv.cat)
+* **Guillem Frisach Pedrola** - (guillem.frisach@estudiants.urv.cat)
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
