@@ -5,9 +5,9 @@
 A Universitat Rovira i Virgili's fourth year project involving knowledge about embedded systems. The main funcionality of this project, consists in an emulation of a joystick for a videogame. Its output is programmed to suit Google Earth Flight Simulator.
 
 For more information please, feel free to check the following files, containing the instructions for running this project:
-* [Manual - Catalan](str_01_mc_cat.pdf)
-* [Manual - Spanish](str_01_mc_esp.pdf)
-* [Manual - English](str_01_mc_eng.pdf)
+* [Manual - Catalan](ame_01_mc_cat.pdf)
+* [Manual - Spanish](ame_01_mc_esp.pdf)
+* [Manual - English](ame_01_mc_eng.pdf)
 
 ## Software Used
 
